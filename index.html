@@ -614,17 +614,6 @@
             </div>
             <div class="main-area">
                 <p>So Angel, Did you forget something again?</p>
-                <div class="recomend">
-                    <div class="leftside">
-                        <img src="images/Windows 11desktop.png">
-                    </div>
-                    <div class="rightside">
-                        <p>Try the new Windows 11!</p>
-                    </div>
-                </div>
-                <div class="ltnot">
-                    <p onclick="recodel()">Not interested!</p>
-                </div>
             </div>
             <div class="add-area">
                 <span class="numslot">2</span>
@@ -663,8 +652,6 @@
     let greet = document.querySelector('.greeting');
     let chk = document.querySelector('.chk');
     let txteaster = document.querySelector('.eastertxt');
-    let reco = document.querySelector('.recomend');
-    let ltnot = document.querySelector('.ltnot');
     let maina = document.querySelector('.main-area');
     let addit = document.querySelector('.add-area');
     let addbtn = document.querySelector('#addbtn');
@@ -730,11 +717,6 @@
         maina.classList.toggle('remove');
         addit.classList.toggle('active');
         addbtn.classList.toggle('add');
-    }
-
-    function recodel(){
-        reco.remove();
-        ltnot.remove();
     }
 
     function loadstuff(){
