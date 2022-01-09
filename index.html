@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>AngelClumsyMemory</title>
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+    }
+    body{
+        overflow: hidden;
+    }
+    html{
+        font-family: Poppins;
+    }
+    main{
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .headerlogin p{
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -2px;
+    }
+    .desclogin p{
+        font-size: 15px;
+        font-weight: 500;
+        margin: 5px;
+    }
+    .inputs{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .inputs input{
+        margin: 5px;
+        width: 300px;
+        height: 45px;
+        border: 0;
+        border-bottom: 2px solid #000000;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 20px;
+        padding: 10px;
+    }
+    .login p{
+        background-color: #000000;
+        padding: 8px;
+        margin: 10px;
+        color: #ffffff;
+        font-weight: 800;
+        border-radius: 5px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .loginsys.remove{
+        display: none;
+    }
+    .main-interface{
+        display: none;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+    }
+    .main-interface.active{
+        display: flex;
+    }
+    .main-interface.disable{
+        pointer-events: none;
+        cursor: default;
+    }
+    .header-main{
+        width: 98%;
+        height: 80px;
+        margin: 10px 10px 10px 10px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px;
+        animation: in-header 0.75s cubic-bezier(0.06, 0.14, 0, 0.9);
+    }
+    @keyframes in-header {
+        from{
+            margin: 100px 10px 10px 10px;
+        }
+        to{
+            margin: 10px 10px 10px 10px;
+        }
+    }
+    .header-main span{
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -2px;
+    }
+    .search-bar{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    .search-bar input{
+        width: 300px;
+        height: 30px;
+        margin: 10px;
+        border: 2px solid #838383;
+        font-size: 15px;
+        font-weight: 400;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .search-bar p{
+        background-color: #cacaca;
+        padding: 8px;
+        border-radius: 1rem;
+        color: #ffffff;
+        font-size: 15px;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.3s ease-in-out;
+    }
+    .search-bar p:hover{
+        background-color: #7c7b7b;
+    }
+    .acc{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+    .acc span{
+        background-color: black;
+        font-size: 18px;
+        padding: 10px 13px 10px 10px;
+        border-radius: 5px;
+        color: #ffffff;
+        margin: 10px;
+        cursor: pointer;
+        user-select: none;
+    }
+    #addbtn.add{
+        background-color: #cacaca;
+    }
+    .acc p{
+        background-color: black;
+        font-size: 18px;
+        padding: 5px 12px;
+        border-radius: 3rem;
+        color: #ffffff;
+        cursor: pointer;
+        transition: 0.75s ease-in-out;
+        user-select: none;
+    }
+    .greeting{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.555);
+        position: absolute;
+        z-index: 9;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .greeting.remove{
+        display: none;
+    }
+    .messenger{
+        width: 600px;
+        height: 90%;
+        background-color: #ffffff;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        animation: in-messenger 0.5s ease-in-out forwards;
+    }
+    @keyframes in-messenger {
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
+        }
+    }
+    .messenger p{
+        margin-top: 10px; 
+    }
+    .messenger.out{
+        animation: out-anim 0.5s ease-in-out forwards;
+    }
+    @keyframes out-anim{
+        to{
+            margin-top: 600px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+    .messenger-header{
+        width: 100%;
+        height: 60px;
+        padding: 20px;
+        border-radius: 10px 10px 0px 0px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+    } 
+    .messenger-header p{
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+    .msg-boy{
+        width: 60%;
+        height: 100px;
+        position: absolute;
+        top: 95px;
+        background-color: #cacaca;
+        color: #000000;
+        margin: 10px 20px 20px 20px;
+        border-radius: 10px 10px 10px 0px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        animation: in-msg-boy 0.5s 1s cubic-bezier(0.06, 0.14, 0, 0.9) forwards;
+    }
+    @keyframes in-msg-boy {
+        from{
+            top: 300px;
+            opacity: 0;
+        } to{
+            top: 95px;
+            opacity: 1;
+        }
+    }
+    .msg-easter{
+        width: 60%;
+        height: 100px;
+        position: absolute;
+        top: 95px;
+        background-color: #cacaca;
+        color: #000000;
+        margin: 10px 20px 20px 20px;
+        border-radius: 10px 10px 10px 0px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        display: none;
+        padding: 10px;
+        animation: in-msg-boy2 0.5s 1s cubic-bezier(0.06, 0.14, 0, 0.9) forwards;
+    }
+    .msg-easter.active{
+        display: flex;
+    }
+    .msg-easter.active2{
+        display: flex;
+        font-size: 15px;
+        font-weight: 500;
+        animation: in-msg-boy3 0.5s 1s cubic-bezier(0.06, 0.14, 0, 0.9) forwards;
+    }
+    @keyframes in-msg-boy3 {
+        from{
+            top: 500px;
+            opacity: 0;
+        } to{
+            top: 220px;
+            opacity: 1;
+        }
+    }
+    @keyframes in-msg-boy2 {
+        from{
+            top: 500px;
+            opacity: 0;
+        } to{
+            top: 345px;
+            opacity: 1;
+        }
+    }
+    .msg-easter p{
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .msg-boy p{
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .msg-angel{
+        position: absolute;
+        right: 0;
+        top: 220px;
+        width: 60%;
+        height: 100px;
+        background-color: rgb(79, 185, 255);
+        color: #000000;
+        margin: 10px 20px 20px 20px;
+        border-radius: 10px 10px 0px 10px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        display: none;
+        opacity: 0;
+        animation: in-msg-angel 0.5s 0.5s cubic-bezier(0.06, 0.14, 0, 0.9) forwards;
+    }
+    @keyframes in-msg-angel {
+        from{
+            top: 400px;
+            opacity: 0;
+        }
+        to{
+            top: 220px;
+            opacity: 1;
+        }
+    }
+    .msg-angel.active{
+        display: flex;
+    }
+    .messenger-footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        padding: 20px;
+        border-radius: 0px 0px 10px 10px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    .messenger-footer input{
+        width: 80%;
+        height: 30px;
+        border-radius: 1rem;
+        padding: 10px;
+        margin: 10px;
+    }
+    .sendbtn{
+        background-color: #cacaca;
+        padding: 8px;
+        border-radius: 1rem;
+        color: #ffffff;
+        font-size: 15px;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.3s ease-in-out;
+        margin: 10px;
+    }
+    .sendbtn:hover{
+        background-color: #7c7b7b;
+    }
+    .main-area{
+        height: 100vh;
+        width: 100%;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-area.remove{
+        display: none;
+    }
+    .main-area p{
+        font-size: 25px;
+        font-weight: 600;
+        color: #000000;
+    }
+    .recomend{
+        width: 500px;
+        height: 250px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ffffff;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+    }
+    .leftside{
+        width: 50%;
+        height: 100%;
+        z-index: 3;
+    }
+    .leftside img{
+        width: 200%;
+        height: 100%;
+    }
+    .rightside{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: 5;
+        background-color: #ffffff65;
+        backdrop-filter: blur(10px);
+    }
+    .rightside p{
+        color: #ffffff;
+    }
+    .ltnot p{
+        background-color: #cacaca;
+        padding: 8px;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 15px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .add-area{
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        background-color: #ffffff;
+    }
+    .add-area.active{
+        display: flex;
+    }
+    .add-area p{
+        font-size: 15px;
+        color: #000000;
+        font-weight: 500;
+    }
+    .add-area span{
+        font-size: 20px;
+        color: #000000;
+        font-weight: 700;
+    }
+    .col{
+        width: 70%;
+        height: 120px;
+        background-color: #ffffff;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        margin: 20px;
+        padding: 10px;
+    }
+    .col.one p:nth-child(2){
+        color: #cacaca;
+        margin: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: none;
+    }
+    .col.one p:nth-child(2).rename{
+        display: flex;
+    }
+    .col.one p:nth-child(3){
+        color: #000000;
+        margin: 10px;
+        font-size: 19px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .col.one p:nth-child(5){
+        color: #ff5b5b;
+        margin: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .col1-txtinp{
+        display: none;
+        width: 200px;
+        height: 30px;
+        border: 0;
+        border-bottom: 2px solid #000000;
+        font-size: 19px;
+        font-weight: 700;
+        padding: 10px;
+    }
+    .col1-txt.rename{
+        display: none;
+    }
+    .col1-txtinp.rename{
+        display: flex;
+    }
+    .settings{
+        width: 50%;
+        height: 90%;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+        position: absolute;
+        z-index: 13;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transform: translate(150%, 0%);
+        transition: 0.55s ease-in-out;
+    }
+    .settings-header{
+        width: 100%;
+        height: 60px;
+        border-radius: 10px 10px 0px 0px;
+        box-shadow: #d3d3d3 0px 0px 10px 0px;
+    } 
+    .settings-header p:nth-child(1){
+        color: #000000;
+        margin: 10px;
+        font-size: 35px;
+        font-weight: 700;
+        cursor: default;
+    }
+    .settings p{
+        color: #cacaca;
+        margin: 50px;
+        font-size: 30px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .settings span{
+        color: #000000;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 700;
+        cursor: default;
+        bottom: 40px;
+    }
+    .settings.active{
+        transform: translate(0%, 0%);
+        transition: 0.55s cubic-bezier(0.64,-0.02, 0.09, 1.08);
+    }
+    .settings.disable{
+        pointer-events: none;
+    }
+    .settingsbtn.active{
+        transition: 1.5s cubic-bezier(0.64,-0.02, 0.09, 1.08);
+        transform: rotate(720deg);
+        background-color: #cacaca;
+    }
+</style>
+<body onload="loadstuff()">
+    <main>
+        <div class="loginsys">
+            <div class="headerlogin">
+                <p>AngelClumsyMemory</p>
+            </div>
+            <div class="desclogin">
+                <p>Angel, Please login to your account!<br>Or maybe you just forgot, LMAO.</p>
+            </div>
+            <div class="inputs">
+                <input type="text" placeholder="Username" class="usernm">
+                <input type="password" placeholder="Password" class="pwd">
+            </div>
+            <div class="login">
+                <p onclick="checklogin()">Let's Remember!</p>
+            </div>
+        </div>
+        <div class="greeting">
+            <div class="messenger">
+                <div class="messenger-header">
+                    <p>Unknown</p>
+                </div>
+                <p class="eeee">New Message</p>
+                <div class="msg-boy">
+                    <p class="chk">Welcome, Angel.</p>
+                </div>
+                <div class="msg-angel">
+                    <p class="txtresult"></p>
+                </div>
+                <div class="msg-easter">
+                    <p class="eastertxt">Hmm... We don't wanna spoil the fun,<br>do we? ;)</p>
+                </div>
+                <div class="messenger-footer">
+                    <input type="text" placeholder="Message" class="smstxtres"> 
+                    <p class="sendbtn" onclick="sendsms()">Send</p>
+                </div>
+            </div>
+        </div>
+        <div class="main-interface">
+            <div class="header-main">
+                <span>AngelClumsyMemory</span>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search">
+                    <p>Search</p>
+                </div>
+                <div class="acc">
+                    <span onclick="additems()" id="addbtn">Add</span>
+                    <p onclick="opensett()" class="settingsbtn">A</p>
+                </div>
+            </div>
+            <div class="main-area">
+                <p>So Angel, Did you forget something again?</p>
+                <div class="recomend">
+                    <div class="leftside">
+                        <img src="images/Windows 11desktop.png">
+                    </div>
+                    <div class="rightside">
+                        <p>Try the new Windows 11!</p>
+                    </div>
+                </div>
+                <div class="ltnot">
+                    <p onclick="recodel()">Not interested!</p>
+                </div>
+            </div>
+            <div class="add-area">
+                <span class="numslot">2</span>
+                <p>Slots Available</p>
+                <div class="col one">
+                    <input type="text" placeholder="Unnamed" class="col1-txtinp">
+                    <p class="close-renamecol1" onclick="closerenamecol1()">Done</p>
+                    <p class="col1-txt" onclick="renamecol1fun()">Unnamed</p>
+                    <p class="col1-desc">No Description</p>
+                    <p class="col1-del">Delete</p>
+                </div>
+            </div>
+        </div>
+        <div class="settings">
+            <div class="settings-header">
+                <p>Settings</p>
+            </div>
+            <p>About</p>
+            <p>Request new slots</p>
+            <p onclick="logoutsession()">Log out</p>
+            <span>V3.1</span>
+        </div>
+    </main>
+</body>
+<script>
+    let uid = document.querySelector('.usernm');
+    let pwd = document.querySelector('.pwd');
+    let loginsys = document.querySelector('.loginsys');
+    let mnint = document.querySelector('.main-interface');
+    let smsres = document.querySelector('.msg-angel');
+    let smseaster = document.querySelector('.msg-easter');
+    let mess = document.querySelector('.messenger');
+    let txtsms  = document.querySelector('.smstxtres');
+    let txtres = document.querySelector('.txtresult');
+    let rmtxt = document.querySelector('.eeee');
+    let greet = document.querySelector('.greeting');
+    let chk = document.querySelector('.chk');
+    let txteaster = document.querySelector('.eastertxt');
+    let reco = document.querySelector('.recomend');
+    let ltnot = document.querySelector('.ltnot');
+    let maina = document.querySelector('.main-area');
+    let addit = document.querySelector('.add-area');
+    let addbtn = document.querySelector('#addbtn');
+    let renamecol1 = document.querySelector('.col1-txt');
+    let renamecol1txt = document.querySelector('.col1-txtinp');
+    let renamedonecol1 = document.querySelector('.close-renamecol1');
+    let settbtn = document.querySelector('.settingsbtn');
+    let sett = document.querySelector('.settings');
+
+    let boytexts = 
+        [
+            'Oh... My little Angel has spoken ;)',
+            'Sorry about the fuss... How do i make it up to you? ;)',
+            'Thanks for replying, my little Angel... ;)',
+            'How sweet for relying. Im really liking this Angel... ;)',
+            'Are you flirting with me? I like playing that game. ;)',
+            'Im busy right now. But you are worth my time, my sweet little Angel ;)',
+            'I wish i was real. I would have hugged you so tight, my Angel... ;)',
+            'I like your personality... ;)',
+            'I have a secret... If you will ask i will trust you... ;)',
+        ];
+
+
+
+    var sesid = localStorage.getItem("sessionid");
+    var col1name = localStorage.getItem("namevalue");
+
+    function logoutsession(){
+        localStorage.removeItem("sessionid");
+        alert("Angel, You will be logged out!")
+        mnint.classList.add('disable');
+        sett.classList.add('disable');
+        setTimeout(function(){
+            window.location.reload();
+        }, 3000);
+    }
+
+    function opensett(){
+        settbtn.classList.toggle('active');
+        sett.classList.toggle('active');
+    }
+
+    function closerenamecol1(){
+        renamecol1.classList.remove('rename');
+        renamecol1txt.classList.remove('rename');
+        renamedonecol1.classList.remove('rename');
+        if(renamecol1txt.value == ""){
+            renamecol1.innerHTML = "Unnamed";
+        }
+        else{
+            renamecol1.innerHTML = renamecol1txt.value;
+            localStorage.setItem("col1name", renamecol1txt.value);
+        }
+    }
+
+    function renamecol1fun(){
+        renamecol1.classList.add('rename');
+        renamecol1txt.classList.add('rename');
+        renamedonecol1.classList.add('rename');
+    }
+
+    function additems(){
+        maina.classList.toggle('remove');
+        addit.classList.toggle('active');
+        addbtn.classList.toggle('add');
+    }
+
+    function recodel(){
+        reco.remove();
+        ltnot.remove();
+    }
+
+    function loadstuff(){
+        /*mnint.classList.add('active');
+        mnint.classList.add('disable');
+        greet.classList.add('remove');
+        mnint.classList.add('active');*/
+        if(sesid == "truein"){
+            loginsys.remove();
+            chk.innerHTML = "Welcome back, Angel."
+            document.addEventListener("keydown", function(e){
+            if(e.key == "Enter"){
+                sendsms();
+                console.log(e);
+            }
+    })
+        }
+        else{
+            greet.classList.add('remove');
+        }
+    }
+
+    function sendsms(){
+        if(txtsms.value == ""){
+            smsres.classList.remove('active');
+            txtsms.value = "";
+            setTimeout(function(){
+                smseaster.innerHTML = "Why did you not answer?"
+                smseaster.classList.add('active2');
+            }, 1000);
+            setTimeout(function(){
+                mess.classList.add('out');
+            }, 5000);
+            setTimeout(function(){
+                mess.remove();
+                mnint.classList.add('active');
+                greet.remove();
+            }, 6000);
+        }
+        else{
+            if(txtsms.value == "Who are you?"){
+                smsres.classList.add('active');
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+            else if(txtsms.value == "Don't talk to me."){
+                smsres.classList.add('active');
+                txteaster.innerHTML = "Having a bad day? I'll cheer you up ;)"
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+            else if(txtsms.value == "I will kill you!"){
+                smsres.classList.add('active');
+                txteaster.innerHTML = "Oh... I am truly sorry... baby ;)"
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+            else if(txtsms.value == "You're kinda cute..."){
+                smsres.classList.add('active');
+                txteaster.innerHTML = "Right back at you ;)"
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+            else if(txtsms.value == "What's your secret?"){
+                smsres.classList.add('active');
+                txteaster.innerHTML = "Since you asked. My secret is that i ha-"
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+            else{
+                var randomText = boytexts[Math.floor(Math.random() * boytexts.length)];
+                smsres.classList.add('active');
+                txteaster.innerHTML = randomText;
+                txtres.innerHTML = txtsms.value;
+                txtsms.value = "";
+                rmtxt.remove();
+                setTimeout(function(){
+                    smseaster.classList.add('active');
+                }, 1000);
+                setTimeout(function(){
+                    mess.classList.add('out');
+                }, 5000);
+                setTimeout(function(){
+                    mess.remove();
+                    mnint.classList.add('active');
+                    greet.remove();
+                }, 6000);
+            }
+        }
+    }
+
+    function checklogin(){
+        if(uid.value == "angel" && pwd.value == "emzangel1980"){
+            loginsys.classList.add('remove');
+            greet.classList.remove('remove');
+            localStorage.setItem("sessionid", "truein");
+        }
+    }
+</script>
+</html>
